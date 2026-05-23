@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nicholas Esterhuizen — Fintech & Digital Assets</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --border: #222222;
+      --text-primary: #f0ece4;
+      --text-secondary: #888880;
+      --accent: #c9a84c;
+      --accent-dim: rgba(201, 168, 76, 0.12);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-primary);
+      font-family: 'DM Mono', monospace;
+      font-weight: 300;
+      line-height: 1.7;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 100;
+      opacity: 0.4;
+    }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* Header */
+    header {
+      padding: 5rem 0 4rem;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.9s ease forwards;
+    }
+
+    .eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      font-weight: 300;
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+    }
+
+    .title-line {
+      display: block;
+    }
+
+    .title-accent {
+      color: var(--accent);
+    }
+
+    .role {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      letter-spacing: 0.1em;
+      margin-top: 1.75rem;
+      text-transform: uppercase;
+    }
+
+    /* Divider */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+      margin: 3rem 0;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.2s forwards;
+    }
+
+    /* About */
+    .about {
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.35s forwards;
+      margin-bottom: 4rem;
+    }
+
+    .about p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      font-weight: 300;
+      color: #ccc8be;
+      line-height: 1.75;
+      max-width: 640px;
+    }
+
+    .about p + p {
+      margin-top: 1.25rem;
+    }
+
+    /* Credentials */
+    .section {
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.5s forwards;
+      margin-bottom: 4rem;
+    }
+
+    .section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+    }
+
+    .credential-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .credential {
+      background: var(--surface);
+      padding: 1.4rem 1.5rem;
+      transition: background 0.2s ease;
+    }
+
+    .credential:hover {
+      background: var(--accent-dim);
+    }
+
+    .credential-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+    }
+
+    .credential-sub {
+      font-size: 0.68rem;
+      color: var(--text-secondary);
+      letter-spacing: 0.08em;
+    }
+
+    /* Experience */
+    .experience-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .experience-item {
+      background: var(--surface);
+      padding: 1.4rem 1.5rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: start;
+      gap: 1rem;
+      transition: background 0.2s ease;
+    }
+
+    .experience-item:hover {
+      background: var(--accent-dim);
+    }
+
+    .exp-role {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.2rem;
+    }
+
+    .exp-org {
+      font-size: 0.68rem;
+      color: var(--text-secondary);
+      letter-spacing: 0.08em;
+    }
+
+    .exp-tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid rgba(201, 168, 76, 0.3);
+      padding: 0.2rem 0.5rem;
+      white-space: nowrap;
+      margin-top: 0.2rem;
+    }
+
+    /* Focus areas */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tag {
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+      padding: 0.35rem 0.75rem;
+      transition: all 0.2s ease;
+    }
+
+    .tag:hover {
+      color: var(--accent);
+      border-color: rgba(201, 168, 76, 0.4);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 0;
+      margin-top: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.65s forwards;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-note {
+      font-size: 0.65rem;
+      color: var(--text-secondary);
+      letter-spacing: 0.1em;
+    }
+
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.65rem;
+      color: var(--text-secondary);
+      letter-spacing: 0.1em;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #4caf72;
+      animation: pulse 2.5s ease infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 560px) {
+      .credential-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .experience-item {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <p class="eyebrow">Product · Fintech · Digital Assets</p>
+      <h1>
+        <span class="title-line">Nicholas</span>
+        <span class="title-line title-accent">Esterhuizen</span>
+      </h1>
+      <p class="role">Product Management &nbsp;/&nbsp; Dubai, UAE</p>
+    </header>
+
+    <div class="divider"></div>
+
+    <section class="about">
+      <p>
+        Finance professional transitioning into product management at the intersection of fintech and digital assets. I bring institutional-grade financial expertise into a space that too often lacks it.
+      </p>
+      <p>
+        My background spans wealth management, venture capital, and co-founding a regulated commodities trading platform in Dubai — giving me an unusual vantage point: I understand both what financial products need to do and how to build the teams and systems that deliver them.
+      </p>
+    </section>
+
+    <section class="section">
+      <p class="section-label">Credentials</p>
+      <div class="credential-grid">
+        <div class="credential">
+          <p class="credential-title">CAIA</p>
+          <p class="credential-sub">Chartered Alternative Investment Analyst</p>
+        </div>
+        <div class="credential">
+          <p class="credential-title">CBP</p>
+          <p class="credential-sub">Certified Bitcoin Professional</p>
+        </div>
+        <div class="credential">
+          <p class="credential-title">AML / CFT</p>
+          <p class="credential-sub">Anti-Money Laundering & Compliance</p>
+        </div>
+        <div class="credential">
+          <p class="credential-title">Regulated Markets</p>
+          <p class="credential-sub">DMCC · Dubai · Commodities</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <p class="section-label">Experience</p>
+      <div class="experience-list">
+        <div class="experience-item">
+          <div>
+            <p class="exp-role">Co-Founder & Managing Director</p>
+            <p class="exp-org">IEG AFRICA DMCC &nbsp;·&nbsp; DUBAI</p>
+          </div>
+          <span class="exp-tag">Current</span>
+        </div>
+        <div class="experience-item">
+          <div>
+            <p class="exp-role">Senior Financial Analyst</p>
+            <p class="exp-org">ARITHMOS CAPITAL &nbsp;·&nbsp; VENTURE CAPITAL</p>
+          </div>
+          <span class="exp-tag">VC</span>
+        </div>
+        <div class="experience-item">
+          <div>
+            <p class="exp-role">Paraplanner — Wealth Management</p>
+            <p class="exp-org">NEDBANK PRIVATE WEALTH &nbsp;·&nbsp; SOUTH AFRICA</p>
+          </div>
+          <span class="exp-tag">Institutional</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <p class="section-label">Focus Areas</p>
+      <div class="tags">
+        <span class="tag">Digital Assets</span>
+        <span class="tag">Tokenisation</span>
+        <span class="tag">Wealth Tech</span>
+        <span class="tag">Compliance Infrastructure</span>
+        <span class="tag">Alternative Investments</span>
+        <span class="tag">Regulated Markets</span>
+        <span class="tag">Product Strategy</span>
+        <span class="tag">DeFi</span>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-inner">
+        <p class="footer-note">More coming soon — projects in progress.</p>
+        <div class="status">
+          <span class="status-dot"></span>
+          <span>Open to PM opportunities</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
