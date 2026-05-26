@@ -63,6 +63,24 @@
       animation: fadeUp 0.9s ease forwards;
     }
 
+    /* Profile photo */
+    .profile-photo {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center top;
+      border: 1px solid var(--border);
+      margin-bottom: 1.75rem;
+      display: block;
+      filter: grayscale(20%);
+      transition: filter 0.3s ease;
+    }
+
+    .profile-photo:hover {
+      filter: grayscale(0%);
+    }
+
     .eyebrow {
       font-family: 'DM Mono', monospace;
       font-size: 0.7rem;
@@ -317,6 +335,7 @@
 <body>
   <div class="container">
     <header>
+      <img src="profile.jpg" alt="Nicholas Esterhuizen" class="profile-photo" />
       <p class="eyebrow">Product · Fintech · Digital Assets</p>
       <h1>
         <span class="title-line">Nicholas</span>
@@ -398,6 +417,7 @@
         <span class="tag">DeFi</span>
       </div>
     </section>
+
     <section class="section">
       <p class="section-label">Projects</p>
       <div class="experience-list">
@@ -424,21 +444,4 @@
             <p class="exp-role">Wealth Tech Robo-Advisor</p>
             <p class="exp-org">Wealth Tech · Risk profiling · ETF portfolio construction · Tax-adjusted projections · Vanilla JS</p>
           </div>
-          <a href="https://nicholas-esterhuizen.github.io/wealth-tech-robo-advisor" 
-             target="_blank" class="exp-tag" 
-             style="text-decoration:none;">Live ↗</a>
-        </div>
-      </div>
-    </section>
-    <footer>
-      <div class="footer-inner">
-        <p class="footer-note">Building in public · More projects incoming.</p>
-        <div class="status">
-          <span class="status-dot"></span>
-          <span>Open to PM opportunities</span>
-        </div>
-      </div>
-    </footer>
-  </div>
-</body>
-</html>
+          <a href="https://
